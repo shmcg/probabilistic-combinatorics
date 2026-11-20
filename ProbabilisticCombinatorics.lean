@@ -10,6 +10,7 @@ module
 public import ProbabilisticCombinatorics.Examples.CliqueLower
 public import ProbabilisticCombinatorics.Examples.DominatingSet
 public import ProbabilisticCombinatorics.Examples.EmptyBins
+public import ProbabilisticCombinatorics.Examples.HypergraphIndependentSet
 public import ProbabilisticCombinatorics.Method.FirstMoment.Basic
 public import ProbabilisticCombinatorics.Method.FirstMoment.Asymptotics
 public import ProbabilisticCombinatorics.Examples.FirstMomentUsage

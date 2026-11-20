@@ -8,6 +8,7 @@ module
 public import ProbabilisticCombinatorics.Examples.CliqueLower
 public import ProbabilisticCombinatorics.Examples.DominatingSet
 public import ProbabilisticCombinatorics.Examples.EmptyBins
+public import ProbabilisticCombinatorics.Examples.HypergraphIndependentSet
 public import ProbabilisticCombinatorics.Method.FirstMoment.Asymptotics
 public import ProbabilisticCombinatorics.Examples.FirstMomentUsage
 public import ProbabilisticCombinatorics.Examples.GaussianMax
@@ -86,3 +87,13 @@ public import ProbabilisticCombinatorics.Examples.Expanders.FirstMoment
 #print axioms ProbabilisticCombinatorics.Examples.BallsBins.below_cutoff_surjective_tendsto_zero
 #print axioms ProbabilisticCombinatorics.DominatingSet.exists_dominatingSet
 #print axioms ProbabilisticCombinatorics.DominatingSet.exists_dominatingSet_of_degree_ge
+
+#print axioms ProbabilisticCombinatorics.FirstMoment.expectation_card_filter
+#print axioms ProbabilisticCombinatorics.FirstMoment.integrable_card_filter
+#print axioms ProbabilityTheory.setBernoulli_real_subset
+#print axioms ProbabilisticCombinatorics.Alteration.exists_feasible_ge_expectation
+#print axioms Hypergraph.exists_isIndepSet_subset
+#print axioms Hypergraph.exists_isIndepSet_of_sampling
+#print axioms Hypergraph.exists_isIndepSet_of_uniform
+#print axioms Hypergraph.exists_isIndepSet_of_averageDegree_le
+#print axioms Hypergraph.exists_isIndepSet_of_three_uniform

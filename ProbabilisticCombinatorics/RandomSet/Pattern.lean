@@ -52,4 +52,11 @@ theorem setBernoulli_pattern {ι : Type*} {u : Set ι} (p : I)
         simp [hn, ha hi]
       _ = _ := by simp
 
+/-- Inclusion probability of a finite subset of the ground set, as a real number. -/
+theorem setBernoulli_real_subset {ι : Type*} {u e : Set ι} (p : I) (he : e.Finite)
+    (heu : e ⊆ u) : setBer(u, p).real {s | e ⊆ s} = (p : ℝ) ^ e.ncard := by
+  classical
+  have h := setBernoulli_pattern (u := u) p he.toFinset ∅ (by simp) (by simpa) (by simp)
+  simpa [measureReal_def, Set.ncard_eq_toFinset_card e he] using congrArg ENNReal.toReal h
+
 end ProbabilityTheory
