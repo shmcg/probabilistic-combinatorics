@@ -1,0 +1,69 @@
+/-
+Copyright (c) 2026 Sam McGuire. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Sam McGuire
+-/
+module
+
+public import ProbabilisticCombinatorics.Method.FirstMoment.Asymptotics
+public import ProbabilisticCombinatorics.Examples.FirstMomentUsage
+public import ProbabilisticCombinatorics.Examples.GaussianMax
+public import ProbabilisticCombinatorics.Examples.BallsBins
+public import ProbabilisticCombinatorics.Examples.Ramsey.Asymptotics
+public import ProbabilisticCombinatorics.Method.FirstMoment.Basic
+public import ProbabilisticCombinatorics.Examples.BiasedBits
+public import ProbabilisticCombinatorics.Examples.Clique
+public import ProbabilisticCombinatorics.Examples.Ramsey.Basic
+public import ProbabilisticCombinatorics.Examples.Expanders.FirstMoment
+
+@[expose] public section
+
+#print axioms ProbabilisticCombinatorics.FirstMoment.measure_ne_zero_le_expectation
+#print axioms ProbabilisticCombinatorics.FirstMoment.one_sub_expectation_le_measure_zero
+#print axioms ProbabilisticCombinatorics.FirstMoment.exists_zero_of_expectation_lt_one
+#print axioms ProbabilisticCombinatorics.FirstMoment.measure_ge_le_expectation_div
+#print axioms ProbabilisticCombinatorics.FirstMoment.expectation_sum_indicators
+#print axioms ProbabilisticCombinatorics.Examples.BiasedBits.biased_bits_expectation
+#print axioms ProbabilisticCombinatorics.Examples.BiasedBits.biased_bits_tail
+#print axioms ProbabilisticCombinatorics.Examples.Clique.expected_cliqueCount
+#print axioms ProbabilisticCombinatorics.Examples.Clique.clique_failure_probability_le
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.expected_badCount
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.ramsey_failure_probability_le
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.ramsey_lower_bound
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.sixteen_without_homogeneous_six
+
+#print axioms ProbabilisticCombinatorics.FirstMoment.measure_ne_zero_le_of_expectation_le
+#print axioms ProbabilisticCombinatorics.FirstMoment.one_sub_le_measure_zero_of_expectation_le
+#print axioms ProbabilisticCombinatorics.FirstMoment.tendsto_measure_ne_zero_of_expectation_le
+#print axioms ProbabilisticCombinatorics.FirstMoment.tendsto_measure_zero_of_expectation_le
+#print axioms ProbabilisticCombinatorics.GaussianMax.standardGaussian_tail_le
+#print axioms ProbabilisticCombinatorics.GaussianMax.expectation_exceedanceCount
+#print axioms ProbabilisticCombinatorics.GaussianMax.threshold_probability_lower_bound
+#print axioms ProbabilisticCombinatorics.GaussianMax.threshold_whp
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.expected_emptyCount
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.failure_probability_le_exp
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.success_probability_ge
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.coupon_collection_whp
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.coupon_collection_ceil_whp
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.ramsey_budget_le_four_div
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.logarithmicThreshold_eq
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.logarithmic_failure_probability_le
+#print axioms ProbabilisticCombinatorics.Examples.Ramsey.logarithmic_success_probability_tendsto_one
+
+#print axioms ProbabilisticCombinatorics.Expanders.choose_ratio_le_pow
+#print axioms ProbabilisticCombinatorics.UniformPermutation.containment_probability
+#print axioms ProbabilisticCombinatorics.UniformPermutation.containment_probability_le
+#print axioms ProbabilisticCombinatorics.UniformPermutation.inverse_containment_probability
+#print axioms ProbabilisticCombinatorics.UniformPermutation.inverse_containment_probability_le
+#print axioms ProbabilisticCombinatorics.Expanders.badCount_eq_zero_iff_expands
+#print axioms ProbabilisticCombinatorics.Expanders.degree_graph_le
+#print axioms ProbabilisticCombinatorics.Expanders.expands_iff_graph_expansion
+#print axioms ProbabilisticCombinatorics.Expanders.expander_budget_le
+#print axioms ProbabilisticCombinatorics.Expanders.badEvent_probability
+#print axioms ProbabilisticCombinatorics.Expanders.expected_badCount
+#print axioms ProbabilisticCombinatorics.Expanders.expected_badCount_le
+#print axioms ProbabilisticCombinatorics.Expanders.expansion_failure_probability_le
+#print axioms ProbabilisticCombinatorics.Expanders.expansion_success_probability_ge
+#print axioms ProbabilisticCombinatorics.Expanders.exists_expanding_matchings
+#print axioms ProbabilisticCombinatorics.Expanders.exists_bipartite_expander
+#print axioms ProbabilisticCombinatorics.Expanders.expansion_whp
