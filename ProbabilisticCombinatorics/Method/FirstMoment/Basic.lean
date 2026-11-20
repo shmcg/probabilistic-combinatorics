@@ -128,6 +128,18 @@ theorem integrable_sum_indicators (μ : Measure Ω) [IsFiniteMeasure μ]
   ext ω
   simp [Set.indicator_apply]
 
+/-- Expected number of indices whose events occur, expressed as a filtered cardinality. -/
+theorem expectation_card_filter (μ : Measure Ω) [IsFiniteMeasure μ]
+    (s : Finset ι) (E : ι → Set Ω) (hE : ∀ i ∈ s, MeasurableSet (E i)) :
+    μ[fun ω ↦ (s.filter fun i ↦ ω ∈ E i).card] = ∑ i ∈ s, μ.real (E i) := by
+  simpa [Set.indicator_apply] using expectation_sum_indicators μ s E hE
+
+/-- The number of events occurring in a finite family is integrable. -/
+theorem integrable_card_filter (μ : Measure Ω) [IsFiniteMeasure μ]
+    (s : Finset ι) (E : ι → Set Ω) (hE : ∀ i ∈ s, MeasurableSet (E i)) :
+    Integrable (fun ω ↦ ((s.filter fun i ↦ ω ∈ E i).card : ℝ)) μ := by
+  simpa [Set.indicator_apply] using integrable_sum_indicators μ s E hE
+
 omit [MeasurableSpace Ω] in
 /-- The natural-valued indicator sum is zero exactly when no selected event occurs. -/
 theorem sum_indicators_eq_zero (s : Finset ι) (E : ι → Set Ω) (ω : Ω) :

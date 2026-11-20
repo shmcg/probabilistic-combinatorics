@@ -2,7 +2,7 @@
 
 Modular Lean 4 formalizations of the probabilistic method in combinatorics, built on mathlib.
 
-The current development centers on a quantitative first-moment interface:
+The first-moment interface starts from a count of witnesses. To use it,
 choose a natural-valued count `X`, prove `μ[X] ≤ δ`, and conclude
 
 ```text
@@ -13,7 +13,7 @@ When `δ n → 0`, a generic theorem gives `P(X_n = 0) → 1`, allowing the samp
 spaces and probability measures to vary with `n`. The development uses Mathlib's
 expectation, measure, and integral APIs throughout.
 
-## Four quantitative examples
+## First-moment examples
 
 | Example | Success event | Explicit failure bound |
 | --- | --- | --- |
@@ -27,6 +27,32 @@ example only assumes standard Gaussian marginals. The expander model uses eight
 independent uniform perfect matchings between two vertex classes of size `n`;
 its underlying simple graph has degree at most eight. Its expansion condition
 is vacuous for `n < 8`.
+
+## Second moments and alteration
+
+| Application | Result |
+| --- | --- |
+| [Clique lower tail](ProbabilisticCombinatorics/Examples/CliqueLower.lean) | A fair random graph contains a clique of size $\lfloor(2-\varepsilon)\log_2 n\rfloor$ with probability tending to one for $0<\varepsilon\le 2$. |
+| [Empty bins](ProbabilisticCombinatorics/Examples/EmptyBins.lean) | Below $(1-\varepsilon)n\log n$, the probability of complete occupancy is at most $e n^{-\varepsilon}$ for $n\ge 2$. |
+| [Dominating sets](ProbabilisticCombinatorics/Examples/DominatingSet.lean) | A graph with $n$ vertices and minimum degree at least $d$ has a dominating set of size at most $n(1+\log(d+1))/(d+1)$. |
+| [Independent sets in hypergraphs](ProbabilisticCombinatorics/Examples/HypergraphIndependentSet.lean) | An $r$-uniform hypergraph on $n$ vertices with average degree at most $d$ has an independent set of size at least $(1-1/r)n d^{-1/(r-1)}$ for $r\ge2$ and $d\ge1$. |
+
+The [second-moment lemmas](ProbabilisticCombinatorics/Method/SecondMoment.lean) bound the
+probability of a zero count and expand the variance of an indicator sum into ordered pairs.
+Distinct empty bins have nonpositive covariance. For cliques, a pair sharing $r$ vertices
+has joint probability equal to the product of its marginal probabilities times $2^{\binom r2}$.
+An [intersection estimate](ProbabilisticCombinatorics/Estimates/IntersectionMoment.lean)
+controls these contributions using the same sampling-without-replacement bound as the expander proof.
+
+The [alteration lemmas](ProbabilisticCombinatorics/Method/Alteration.lean) average an integrable
+upper bound on repair cost or a lower bound on retained value. For domination, sample each vertex with
+probability $p$ and add every vertex whose closed neighborhood was missed. This yields
+the degree-sequence bound $np+\sum_v(1-p)^{1+\deg(v)}$ before choosing $p$.
+
+For a hypergraph with nonempty edges, [delete one vertex from each fully sampled edge](ProbabilisticCombinatorics/Hypergraph/IndependentSet.lean).
+Several edges may charge the same vertex. This leaves an independent set of size at least
+$pn-\sum_{e\in E}p^{|e|}$ for some sample. Uniformity turns the sum into $|E|p^r$.
+The formalization uses Mathlib’s `Hypergraph` and only requires its vertex set to be finite.
 
 ## Use and organization
 
@@ -67,7 +93,7 @@ lake build
 ```
 
 The default build includes the library and [Audit.lean](Audit.lean), which checks
-the axioms of 47 principal theorems. These proofs use only `propext`,
+the axioms of 71 principal theorems. These proofs use only `propext`,
 `Classical.choice`, and `Quot.sound`, with no `sorryAx` or additional axioms.
 The project builds with `autoImplicit = false`.
 

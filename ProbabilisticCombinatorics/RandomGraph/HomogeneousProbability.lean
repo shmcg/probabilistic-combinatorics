@@ -8,6 +8,7 @@ module
 public import Mathlib.Probability.Combinatorics.BinomialRandomGraph.Defs
 public import Mathlib.Combinatorics.SimpleGraph.Clique
 public import Mathlib.Data.Sym.Card
+public import ProbabilisticCombinatorics.RandomSet.Pattern
 
 @[expose] public section
 
@@ -51,27 +52,20 @@ private theorem edge_pattern_probability [Countable V] (p : I) (t : Finset (Sym2
   have hm : MeasurableSet {G : SimpleGraph V | ∀ e ∈ t, (e ∈ G.edgeSet ↔ b = true)} := by
     simp only [measurableSet_setOfPred]
     fun_prop
-  rw [SimpleGraph.binomialRandom_eq_map,
-    Measure.map_apply SimpleGraph.measurable_fromEdgeSet hm, setBernoulli_apply']
-  have cylinder_eq : (fun q : Sym2 V → Prop ↦ {e | q e}) ⁻¹'
-      (SimpleGraph.fromEdgeSet ⁻¹' {G | ∀ e ∈ t, (e ∈ G.edgeSet ↔ b = true)}) =
-      Set.pi (t : Set (Sym2 V)) (fun _ ↦ {(b = true : Prop)}) := by
-    ext q
-    simp only [Set.mem_preimage, Set.mem_ofPred_eq, edgeSet_fromEdgeSet, Set.mem_sdiff,
-      Set.mem_pi, Finset.mem_coe, Set.mem_singleton_iff, eq_iff_iff]
-    exact forall₂_congr fun e he ↦ by
-      rw [and_iff_left (show e ∉ Sym2.diagSet from ht e he)]
-  rw [cylinder_eq, Measure.infinitePi_pi _ (fun _ _ ↦ measurableSet_singleton _)]
-  calc
-    _ = ∏ _e ∈ t, (if b then (toNNReal p : ℝ≥0∞) else (toNNReal (σ p) : ℝ≥0∞)) := by
-      refine Finset.prod_congr rfl fun e he ↦ ?_
-      have hd : ¬ e.IsDiag := ht e he
-      cases b
-      · exact bernoulliMeasure_apply_of_notMem_of_mem p (measurableSet_singleton _)
-          (by simpa using hd) (by simp)
-      · exact bernoulliMeasure_apply_of_mem_of_notMem p (measurableSet_singleton _)
-          (by simpa using hd) (by simp)
-    _ = _ := by simp
+  rw [SimpleGraph.binomialRandom_eq_map, Measure.map_apply SimpleGraph.measurable_fromEdgeSet hm]
+  have hsub : (t : Set (Sym2 V)) ⊆ Sym2.diagSetᶜ := fun e he ↦ ht e he
+  have hmem (S : Set (Sym2 V)) (e : Sym2 V) (he : e ∈ t) :
+      e ∈ (fromEdgeSet S).edgeSet ↔ e ∈ S := by
+    simp [edgeSet_fromEdgeSet, show e ∉ Sym2.diagSet from ht e he]
+  have pre : fromEdgeSet ⁻¹' {G : SimpleGraph V | ∀ e ∈ t, (e ∈ G.edgeSet ↔ b = true)} =
+      {S | ∀ e ∈ t, (e ∈ S ↔ b = true)} := by
+    ext S
+    change (∀ e ∈ t, e ∈ (fromEdgeSet S).edgeSet ↔ b = true) ↔ _
+    exact forall₂_congr fun e he ↦ by rw [hmem S e he]
+  rw [pre]
+  cases b
+  · simpa [Set.subset_def] using setBernoulli_pattern p ∅ t disjoint_bot_left (by simp) hsub
+  · simpa [Set.subset_def] using setBernoulli_pattern p t ∅ disjoint_bot_right hsub (by simp)
 
 private theorem clique_iff_pairs [DecidableEq V] (G : SimpleGraph V) (s : Finset V) :
     G.IsClique (s : Set V) ↔ ∀ e ∈ pairs s, e ∈ G.edgeSet := by
@@ -124,6 +118,28 @@ theorem independent_probability [Countable V] (p : I) (s : Finset V) :
   classical
   simpa only [independent_iff_pairs, Bool.false_eq_true, iff_false, ite_false, card_pairs] using
     edge_pattern_probability p (pairs s) (fun _ he ↦ pairs_nondiagonal he) false
+
+/-- Two prescribed cliques share exactly the edges internal to the intersection. -/
+theorem clique_pair_probability [Countable V] [DecidableEq V] (p : I) (s t : Finset V) :
+    (SimpleGraph.binomialRandom V p) ({G | G.IsClique (s : Set V)} ∩
+      {G | G.IsClique (t : Set V)}) =
+      (toNNReal p : ℝ≥0∞) ^
+        (s.card.choose 2 + t.card.choose 2 - (s ∩ t).card.choose 2) := by
+  have pairs_inter : pairs s ∩ pairs t = pairs (s ∩ t) := by
+    ext e
+    induction e using Sym2.ind with
+    | _ a b => simp only [mem_inter, mem_pairs]; tauto
+  have hc := card_union_add_card_inter (pairs s) (pairs t)
+  rw [pairs_inter, card_pairs, card_pairs, card_pairs] at hc
+  have h := edge_pattern_probability p (pairs s ∪ pairs t)
+    (fun e he ↦ (mem_union.mp he).elim (fun h ↦ pairs_nondiagonal h)
+      (fun h ↦ pairs_nondiagonal h)) true
+  rw [show (pairs s ∪ pairs t).card = _ from Nat.eq_sub_of_add_eq hc] at h
+  simp only [ite_true] at h
+  convert h using 2
+  ext G
+  simp [clique_iff_pairs]
+  grind
 
 #print axioms clique_probability
 #print axioms independent_probability
