@@ -5,6 +5,9 @@ Authors: Sam McGuire
 -/
 module
 
+public import ProbabilisticCombinatorics.Examples.CliqueLower
+public import ProbabilisticCombinatorics.Examples.DominatingSet
+public import ProbabilisticCombinatorics.Examples.EmptyBins
 public import ProbabilisticCombinatorics.Method.FirstMoment.Asymptotics
 public import ProbabilisticCombinatorics.Examples.FirstMomentUsage
 public import ProbabilisticCombinatorics.Examples.GaussianMax
@@ -67,3 +70,19 @@ public import ProbabilisticCombinatorics.Examples.Expanders.FirstMoment
 #print axioms ProbabilisticCombinatorics.Expanders.exists_expanding_matchings
 #print axioms ProbabilisticCombinatorics.Expanders.exists_bipartite_expander
 #print axioms ProbabilisticCombinatorics.Expanders.expansion_whp
+
+#print axioms ProbabilityTheory.setBernoulli_pattern
+#print axioms ProbabilisticCombinatorics.SecondMoment.measure_zero_le_variance_div_sq
+#print axioms ProbabilisticCombinatorics.SecondMoment.variance_sum_indicators
+#print axioms ProbabilisticCombinatorics.SecondMoment.variance_le_sum_of_pairwise
+#print axioms ProbabilisticCombinatorics.Alteration.exists_feasible_le_expectation
+#print axioms ProbabilisticCombinatorics.sum_pow_inter_le
+#print axioms ProbabilisticCombinatorics.RamseyProbabilityHelpers.clique_pair_probability
+#print axioms ProbabilisticCombinatorics.Examples.Clique.cliqueFree_probability_le
+#print axioms ProbabilisticCombinatorics.Examples.Clique.logarithmic_cliqueFree_tendsto_zero
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.emptyBin_pair_probability
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.surjective_probability_le_inv_mean
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.below_cutoff_bound
+#print axioms ProbabilisticCombinatorics.Examples.BallsBins.below_cutoff_surjective_tendsto_zero
+#print axioms ProbabilisticCombinatorics.DominatingSet.exists_dominatingSet
+#print axioms ProbabilisticCombinatorics.DominatingSet.exists_dominatingSet_of_degree_ge
